@@ -7,9 +7,13 @@ const db = require('./db');
 const cron = require('node-cron');
 const fetchUser = require('./ Middleware/authmiddleware');
 env.config();
-app.use(express.json());
+app.use(express.json({ limit: '30mb' }));
+app.use(express.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
+app.get('/ping', (req, res) => {
+  res.status(200).json({ message: 'Server is awake' });
+});
 
 //Signup and Login Routes
 const authRoutes = require('./Routes/auth');
@@ -49,6 +53,10 @@ app.use('/', fetchUser, chatRoutes);
 // Settings Route
 const settingsRoutes = require('./Routes/settings');
 app.use('/',fetchUser, settingsRoutes);
+
+// OCR Route
+const ocrRoutes = require('./Routes/OCR');
+app.use('/', fetchUser, ocrRoutes);
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Server is running on port ${process.env.PORT}`);

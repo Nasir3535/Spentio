@@ -3,13 +3,15 @@ import {
   Calendar,
   TrendingDown,
   TrendingUp,
-  PieChart,
+  PieChartIcon,
   Sparkles,
   ArrowRight,
   SlidersHorizontal,
   BarChart3,
   CalendarDays,
 } from 'lucide-react';
+const COLORS = ['#4f46e5', '#f59e0b', '#f43f5e', '#10b981', '#6366f1'];
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import Loader from '../Layouts/Loader';
 import { toast } from 'react-toastify';
@@ -18,7 +20,14 @@ function Analysis() {
   const [viewType, setViewType] = useState('month');
 
   // Input tracking states
-  const [selectedMonth, setSelectedMonth] = useState('2026-05');
+  const [selectedMonth, setSelectedMonth] = useState(() => {
+    const now = new Date();
+    const year = now.getFullYear();
+    // Adds a leading zero if the month is less than 10 (e.g., '06')
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+
+    return `${year}-${month}`; // Returns "2026-06"
+  });
   const [selectedYear, setSelectedYear] = useState('2026');
   const [customStart, setCustomStart] = useState('2026-05-01');
   const [customEnd, setCustomEnd] = useState('2026-05-31');
@@ -261,22 +270,65 @@ function Analysis() {
           <div>
             <div className="flex justify-between items-center mb-6">
               <h4 className="font-bold text-slate-900 dark:text-white text-base">Where Your Money Goes</h4>
-              <PieChart size={16} className="text-slate-400 dark:text-slate-500" />
+              <PieChartIcon size={16} className="text-slate-400 dark:text-slate-500" />
             </div>
-            <div className="space-y-4">
-              {metrics.topCategories.length > 0 ? metrics.topCategories.map((cat, idx) => {
-                const colors = ['bg-indigo-600', 'bg-amber-500', 'bg-rose-500'];
-                return (
-                  <LinearChartBar
-                    key={idx}
-                    label={cat.label}
-                    amount={`₹${cat.amount.toLocaleString('en-IN')}`}
-                    percentage={`${cat.percentage}%`}
-                    color={colors[idx] || 'bg-slate-400 dark:bg-slate-600'}
-                  />
-                )
-              }) : <p className="text-sm text-slate-400 dark:text-slate-500 text-center">No spending recorded yet.</p>}
+
+            {/* The Interactive Donut Chart */}
+            <div className="h-48 w-full flex justify-center items-center mb-4">
+              {metrics.topCategories.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={metrics.topCategories}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60} // Setting an inner radius creates the modern "Donut" look
+                      outerRadius={80}
+                      paddingAngle={5} // Adds nice spacing between the slices
+                      dataKey="amount" // Tells Recharts to size slices based on the amount
+                      nameKey="label"
+                      stroke="none" // Removes the ugly default white borders
+                    >
+                      {metrics.topCategories.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    {/* Custom Tooltip on hover */}
+                    <Tooltip
+                      formatter={(value) => `₹${value.toLocaleString('en-IN')}`}
+                      contentStyle={{
+                        backgroundColor: 'rgba(30, 41, 59, 0.9)', // slate-800
+                        borderRadius: '12px',
+                        border: 'none',
+                        color: '#fff',
+                        boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                      }}
+                      itemStyle={{ color: '#e2e8f0' }} // slate-200
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              ) : (
+                <p className="text-sm text-slate-400 dark:text-slate-500 text-center w-full">No spending recorded yet.</p>
+              )}
             </div>
+
+            {/* Custom Minimalist Legend */}
+            {metrics.topCategories.length > 0 && (
+              <div className="space-y-3 px-2">
+                {metrics.topCategories.map((cat, idx) => (
+                  <div key={idx} className="flex justify-between items-center text-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: COLORS[idx % COLORS.length] }}></div>
+                      <span className="text-slate-600 dark:text-slate-300 font-medium">{cat.label}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-slate-400 dark:text-slate-500">{cat.percentage}%</span>
+                      <span className="font-bold text-slate-900 dark:text-white">₹{cat.amount.toLocaleString('en-IN')}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2 text-indigo-600 dark:text-indigo-400 text-xs font-bold">

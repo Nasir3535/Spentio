@@ -4,7 +4,7 @@ const Transaction = require('../Models/transaction');
 
 router.get('/transactions', async (req, res) => {
     try {
-        const transactions = await Transaction.find({ user: req.user.id });
+        const transactions = await Transaction.find({ user: req.user.id }).sort({date:-1});
         res.status(200).json(transactions);
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch transactions" });
@@ -13,7 +13,7 @@ router.get('/transactions', async (req, res) => {
 router.get('/transactions/filter/:type', async (req, res) => {
     try {
         const { type } = req.params;
-        const transactions = await Transaction.find({ type: type , user: req.user.id });
+        const transactions = await Transaction.find({ type: type , user: req.user.id }).sort({date:-1});
         res.status(200).json(transactions);
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch transactions" });
