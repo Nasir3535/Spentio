@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { 
-    Mail, 
-    Lock, 
-    Wallet, 
-    ArrowRight, 
+import {
+    Mail,
+    Lock,
+    Wallet,
+    ArrowRight,
     Loader2,
     DollarSign,
     Coins,
-    PieChart
+    PieChart,
+    EyeOff,
+    Eye
 } from 'lucide-react';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -22,6 +24,7 @@ function Login() {
         password: '',
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -56,7 +59,7 @@ function Login() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-slate-900 text-slate-50 font-sans p-4 relative overflow-hidden selection:bg-indigo-500/30">
-            
+
             {/* INLINE STYLES FOR BACKGROUND ANIMATIONS */}
             <style>
                 {`
@@ -80,7 +83,7 @@ function Login() {
                 <Coins size={120} className="absolute bottom-[20%] right-[15%] text-amber-500/10 animate-float" />
                 <PieChart size={90} className="absolute top-[10%] right-[20%] text-rose-500/10 animate-float-slow" />
                 <Wallet size={100} className="absolute bottom-[15%] left-[15%] text-indigo-500/10 animate-float-delayed" />
-                
+
                 {/* Subtle ambient gradients */}
                 <div className="absolute top-[-20%] right-[-10%] w-96 h-96 bg-indigo-600/10 rounded-full blur-[100px]"></div>
                 <div className="absolute bottom-[-20%] left-[-10%] w-96 h-96 bg-emerald-600/10 rounded-full blur-[100px]"></div>
@@ -149,14 +152,21 @@ function Login() {
                         <div className="relative group">
                             <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors" size={18} />
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 id="password"
                                 required
                                 value={formData.password}
                                 onChange={handleChange}
-                                className="w-full pl-12 pr-4 py-3.5 bg-slate-950/50 border border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 focus:bg-slate-900 text-white transition-all font-medium placeholder-slate-600"
+                                className="w-full pl-12 pr-12 py-3.5 bg-slate-950/50 border border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 focus:bg-slate-900 text-white transition-all font-medium placeholder-slate-600"
                                 placeholder="••••••••"
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500 cursor-pointer hover:text-indigo-400 focus:outline-none transition-colors"
+                            >
+                                {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                            </button>
                         </div>
                     </div>
 
