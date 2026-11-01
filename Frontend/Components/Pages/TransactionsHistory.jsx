@@ -221,8 +221,8 @@ function Transactions() {
                       ${tx.type === 'expense' && 'bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-400'}
                       ${tx.type === 'transfer' && 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400'}
                     `}>
-                      {tx.type === 'income' && <ArrowUpRight size={16} />}
-                      {tx.type === 'expense' && <ArrowDownLeft size={16} />}
+                      {tx.type === 'income' && <ArrowDownLeft size={16} />}
+                      {tx.type === 'expense' && <ArrowUpRight size={16} />}
                       {tx.type === 'transfer' && <RefreshCw size={14} />}
                     </div>
                     <div>
@@ -299,7 +299,7 @@ function Transactions() {
             ${tx.type === 'income' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' :
                     tx.type === 'expense' ? 'bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400' :
                       'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400'}`}>
-                  {tx.type === 'income' ? <ArrowUpRight size={18} /> : tx.type === 'expense' ? <ArrowDownLeft size={18} /> : <RefreshCw size={16} />}
+                  {tx.type === 'income' ? <ArrowDownLeft size={18} /> : tx.type === 'expense' ? <ArrowUpRight size={18} /> : <RefreshCw size={16} />}
                 </div>
                 {/* Details */}
                 <div>

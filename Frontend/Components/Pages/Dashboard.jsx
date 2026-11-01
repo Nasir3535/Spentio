@@ -148,8 +148,8 @@ function Dashboard() {
       {/* CORE METRICS GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <StatCard title="Total Available Balance" value="All-time" amount={`₹${totalBalance.toLocaleString('en-IN')}`} icon={<Wallet size={20} />} trendColor="text-indigo-600 dark:text-indigo-400" bgCircle="bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400" />
-        <StatCard title="Total Income" value="This Month" amount={`₹${totalIncome.toLocaleString('en-IN')}`} icon={<ArrowUpRight size={20} />} trendColor="text-emerald-600 dark:text-emerald-400" bgCircle="bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" />
-        <StatCard title="Total Expenses" value="This Month" amount={`₹${totalExpense.toLocaleString('en-IN')}`} icon={<ArrowDownLeft size={20} />} trendColor="text-rose-600 dark:text-rose-400" bgCircle="bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400" />
+        <StatCard title="Total Income" value="This Month" amount={`₹${totalIncome.toLocaleString('en-IN')}`} icon={<ArrowDownLeft size={20} />} trendColor="text-emerald-600 dark:text-emerald-400" bgCircle="bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" />
+        <StatCard title="Total Expenses" value="This Month" amount={`₹${totalExpense.toLocaleString('en-IN')}`} icon={<ArrowUpRight size={20} />} trendColor="text-rose-600 dark:text-rose-400" bgCircle="bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400" />
       </div>
 
       {/* SECONDARY ROW GRID */}
