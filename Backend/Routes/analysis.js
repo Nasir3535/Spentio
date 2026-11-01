@@ -41,7 +41,7 @@ router.get('/analysis', async (req, res) => {
             { $match: { user: userId, type: 'expense', date: { $gte: currentStart, $lte: currentEnd } } },
             { $group: { _id: "$category", amount: { $sum: "$amount" } } },
             { $sort: { amount: -1 } }, // Sort highest to lowest
-            { $limit: 3 } // Grab only the top 3
+            { $limit: 6 } // Grab only the top 6
         ]);
 
         // Map the top categories to include the percentage your React UI expects

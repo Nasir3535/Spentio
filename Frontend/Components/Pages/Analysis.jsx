@@ -10,7 +10,16 @@ import {
   BarChart3,
   CalendarDays,
 } from 'lucide-react';
-const COLORS = ['#4f46e5', '#f59e0b', '#f43f5e', '#10b981', '#6366f1'];
+const COLORS = [
+  '#6366f1', // Indigo
+  '#f59e0b', // Amber
+  '#ef4444', // Red
+  '#10b981', // Emerald
+  '#8b5cf6', // Violet (New)
+  '#06b6d4', // Cyan (New)
+  '#ec4899', // Pink (New)
+  '#84cc16', // Lime (New)
+];
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import Loader from '../Layouts/Loader';
